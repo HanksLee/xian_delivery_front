@@ -1,0 +1,121 @@
+@import 'page/normal';
+@import 'page/flex';
+@import 'page/rwd';
+@import 'page/grid';
+@import 'page/padding';
+@import 'page/margin';
+@import 'page/position';
+@import 'page/transform';
+@import 'page/width';
+@import 'page/height';
+
+
+    // *{
+    //     outline: 1px solid red;
+    // }
+       @include grid(24);
+
+       @include flex(24);
+       @include flex-grow(10);
+       @include flex-shrink(10);
+       @include order(10);
+
+       @include wpx(240);
+       @include wpercent(100);
+
+       @include h(100);
+
+       @include pbpercent(50);
+       @include p(40);
+       @include ptpx(40);
+       @include pbpx(40);
+       @include plpx(40);
+       @include prpx(40);
+
+       @include m(40);
+       @include mtpx(40);
+       @include mbpx(40);
+       @include mlpx(40);
+       @include mrpx(40);
+
+       @include t(100);
+       @include b(100);
+       @include l(100);
+       @include r(100);
+
+       @include rotate(72);
+       @include scale(10);
+
+       @include z(20);
+
+
+
+@include rwd(medium) {
+    //平板
+    @include dis-lg();
+    @include float-lg();
+    @include visibility-lg();
+
+    @include grid-size(lg,24);
+
+    @include flex-size(lg,24);
+
+    @include wpx-size(lg,240);
+    @include wpercent-size(lg,100);
+
+    @include h-size(lg,100);
+
+    @include pbpercent-size(lg,100);
+    @include p-size(lg,40);
+    @include ptpx-size(lg,40);
+    @include pbpx-size(lg,40);
+    @include plpx-size(lg,40);
+    @include prpx-size(lg,40);
+
+    @include m-size(lg,40);
+    @include mtpx-size(lg,40);
+    @include mbpx-size(lg,40);
+    @include mlpx-size(lg,40);
+    @include mrpx-size(lg,40);
+
+    @include t-size(lg,100);
+    @include b-size(lg,100);
+    @include l-size(lg,100);
+    @include r-size(lg,100);
+
+    }
+
+
+@include rwd(desktop) {
+    //桌機
+    @include dis-xl();
+    @include float-xl();
+    @include visibility-xl();
+
+    @include grid-size(xl,24);
+
+    @include flex-size(xl,24);
+
+    @include wpx-size(xl,240);
+    @include wpercent-size(xl,100);
+
+    @include h-size(xl,100);
+
+    @include pbpercent-size(xl,100);
+    @include p-size(xl,40);
+    @include ptpx-size(xl,40);
+    @include pbpx-size(xl,40);
+    @include plpx-size(xl,40);
+    @include prpx-size(xl,40);
+
+    @include m-size(xl,40);
+    @include mtpx-size(xl,40);
+    @include mbpx-size(xl,40);
+    @include mlpx-size(xl,40);
+    @include mrpx-size(xl,40);
+
+    @include t-size(xl,100);
+    @include b-size(xl,100);
+    @include l-size(xl,100);
+    @include r-size(xl,100);
+    }
