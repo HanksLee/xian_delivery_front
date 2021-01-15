@@ -62,7 +62,7 @@ export default {
   }
 
   .member-title {
-    background-color: #457fce;
+    background-color: #d32a32;
     color: white;
     line-height: 50px;
     text-align: center;
@@ -107,7 +107,7 @@ export default {
 
     .mobile-content {
       font-size: 30px;
-      color: #457fce;
+      color: #d32a32;
     }
 
     &.captcha-container {
@@ -128,6 +128,7 @@ export default {
         background-color: #d72828;
         color: #fff;
         padding: 0 10px;
+        cursor: pointer;
       }
     }
 
@@ -168,7 +169,7 @@ export default {
     }
 
     .member-btn {
-      background: #457fce;
+      background: #d32a32;
     }
 
     .back-btn {

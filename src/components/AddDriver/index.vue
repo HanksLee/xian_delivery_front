@@ -98,7 +98,7 @@ export default {
   }
 
   .add-driver-title {
-    background-color: #457fce;
+    background-color: #d32a32;
     color: white;
     line-height: 50px;
     text-align: center;
@@ -136,7 +136,7 @@ export default {
       vertical-align: top;
       font-size: 18px;
       color: #fff;
-      background: #457fce;
+      background: #d32a32;
       position: relative;
       top: 0;
       opacity: 0.8;

@@ -62,8 +62,8 @@ export default {
   }
 
   .search-title {
-    background-color: #457fce;
-    color: white;
+    background-color: #d32a32;
+    color: #ffffff;
     line-height: 50px;
     text-align: center;
     border-radius: 5px 5px 0 0;
@@ -76,7 +76,7 @@ export default {
   .order-number-text,
   .order-info-text {
     background: #eaeaea;
-    color: #0a499d;
+    color: #000000;
     text-align: center;
     font-weight: bold;
     padding: 0 8px;
@@ -103,7 +103,7 @@ export default {
       vertical-align: top;
       font-size: 18px;
       color: #fff;
-      background: #457fce;
+      background: #d32a32;
       position: relative;
       top: 0;
       opacity: 0.8;
@@ -129,7 +129,7 @@ export default {
       border-radius: 0 0 5px 5px;
 
       .highlight {
-        color: #d72828;
+        color: #d32a32;
       }
     }
 }

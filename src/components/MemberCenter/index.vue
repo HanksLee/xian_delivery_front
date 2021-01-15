@@ -115,7 +115,7 @@ export default {
     margin-bottom: 30px;
 
     >>> .el-input__inner {
-      background: #457fce;
+      background: #d32a32;
       color: white;
       border: none;
       border-radius: 5px 5px 0 0;
@@ -137,7 +137,7 @@ export default {
   }
 
   .el-select-dropdown__item {
-    background-color: #245598;
+    background-color: #aeaeae;
 
     span {
       color: white;
@@ -147,7 +147,7 @@ export default {
   }
 
   .el-select-dropdown__item.hover {
-    background: #457fce;
+    background: #d32a32;
   }
 
   .popper__arrow {

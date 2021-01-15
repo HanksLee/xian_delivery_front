@@ -37,7 +37,7 @@
               <p class="company-info"><img src="../../assets/img/tel.png" alt="tel.png">(02)2358-7289</p>
               <p class="company-info"><img src="../../assets/img/location.png" alt="location.png">台北市中正區新生南路一段148號7樓之1</p>
             </div>
-            <div class="col-6">
+            <!-- <div class="col-6">
               <div class="logo-container">
                 <img src="../../assets/img/company-logo5.png" alt="松珍生物科技股份有限公司">
               </div>
@@ -52,7 +52,7 @@
               <p class="company-name">健策精密工業股份有限公司</p>
               <p class="company-info"><img src="../../assets/img/tel.png" alt="tel.png">(03) 385-7576</p>
               <p class="company-info"><img src="../../assets/img/location.png" alt="location.png">桃園市大園區中山北路268巷19號</p>
-            </div>
+            </div> -->
           </div>
           <div>
             <p class="question-text">填寫問題</p>
@@ -124,7 +124,7 @@ export default {
   }
 
   .company-title {
-    background-color: #457fce;
+    background-color: #d32a32;
     color: white;
     line-height: 50px;
     text-align: center;
@@ -178,7 +178,7 @@ export default {
 
   .question-text {
     background: #eaeaea;
-    color: #0a499d;
+    color: #000000;
     text-align: center;
     font-weight: bold;
     padding: 0 8px;
@@ -212,7 +212,7 @@ export default {
       vertical-align: top;
       font-size: 18px;
       color: #fff;
-      background: #457fce;
+      background: #d32a32;
       position: relative;
       top: 0;
       opacity: 0.8;

@@ -100,7 +100,7 @@ export default {
   }
 
   .fare-title {
-    background-color: #457fce;
+    background-color: #d32a32;
     color: white;
     line-height: 50px;
     text-align: center;
@@ -124,7 +124,7 @@ export default {
       content: "$799";
       font-size: 40px;
       font-weight: bold;
-      color: #2aa7ee;
+      color: #d32a32;
       background-color: #fff;
       padding: 0 10px;
       display: block;
@@ -178,7 +178,7 @@ export default {
       vertical-align: top;
       font-size: 18px;
       color: #fff;
-      background: #457fce;
+      background: #d32a32;
       position: relative;
       top: 0;
       opacity: 0.8;

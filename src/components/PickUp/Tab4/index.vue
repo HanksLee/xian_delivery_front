@@ -89,7 +89,7 @@ export default {
   // padding: 60px 0 40px 0;
 
   .tab-line {
-    border: 2px solid #309e2b;
+    border: 2px solid #d32a32;
   }
 
   .pick-up-container {

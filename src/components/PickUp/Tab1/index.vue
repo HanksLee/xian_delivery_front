@@ -450,7 +450,7 @@ export default {
   // padding: 60px 0 40px 0;
 
   .tab-line {
-    border: 2px solid #039ba1;
+    border: 2px solid #d32a32;
   }
 
   .pick-up-container {
@@ -459,7 +459,7 @@ export default {
 
   .question-text {
     background: #eaeaea;
-    color: #0a499d;
+    // color: #0a499d;
     text-align: center;
     font-weight: bold;
     padding: 0 8px;
@@ -504,7 +504,7 @@ export default {
       color: white;
       width: 100px;
       display: inline-block;
-      background: #b65b65 !important;
+      background: #d32a32 !important;
       // padding: 6px 0;
       font-weight: bold;
       font-size: 14px;
@@ -515,7 +515,7 @@ export default {
   }
 
   .cost-container {
-    background-color: #457fce;
+    background-color: #d32a32;
 
     div + div {
       border-left: 1px solid #fff;
@@ -550,7 +550,7 @@ export default {
       vertical-align: top;
       font-size: 18px;
       color: #fff;
-      background: #457fce;
+      background: #d32a32;
       position: relative;
       top: 0;
       opacity: 0.8;

@@ -64,7 +64,7 @@ export default {
   }
 
   .member-title {
-    background-color: #457fce;
+    background-color: #d32a32;
     color: white;
     line-height: 50px;
     text-align: center;
@@ -160,7 +160,7 @@ export default {
     }
 
     .member-btn {
-      background: #457fce;
+      background: #d32a32;
     }
 
     .back-btn {

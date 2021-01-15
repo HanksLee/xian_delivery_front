@@ -79,7 +79,7 @@ export default {
   }
 
   .reservestep-title {
-    background-color: #457fce;
+    background-color: #d32a32;
     color: white;
     line-height: 50px;
     text-align: center;
@@ -109,7 +109,7 @@ export default {
         flex: 0 0 1;
         p:nth-child(1) {
           font-size: 18px;
-          color: #2aa7ee;
+          color: #d32a32;
           font-weight: bold;
         }
 
@@ -133,7 +133,7 @@ export default {
 
     .go-reserve {
       font-size: 30px;
-      color: #0a499d;
+      color: #d32a32;
       font-weight: bold;
       text-align: center;
     }
@@ -151,7 +151,7 @@ export default {
       vertical-align: top;
       font-size: 18px;
       color: #fff;
-      background: #457fce;
+      background: #d32a32;
       position: relative;
       top: 0;
       opacity: 0.8;

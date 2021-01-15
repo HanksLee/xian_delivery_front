@@ -1,11 +1,13 @@
 <template>
   <!-- .navbar-expand-{sm|md|lg|xl}決定在哪個斷點以上就出現漢堡式選單 -->
     <!-- navbar-dark 文字顏色 .bg-dark 背景顏色 -->
-    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg">
       <div class="container">
         <router-link class="navbar-brand" to="/">
           <!-- <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""> -->
-          <span class="h3 mx-1">WebDesign</span>
+          <div class="logo">
+            <img src="../../assets/img/logo.png" alt="logo">
+          </div>
         </router-link>
 
         <!-- .collapse.navbar-collapse 用於外層中斷點群組和隱藏導覽列內容 -->
@@ -21,6 +23,12 @@
             </li>
             <li class="nav-item">
               <router-link to="/Company" class="nav-link" >合作廠商</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="/Login"  class="nav-link" >登入</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="/MemberCenter"  class="nav-link" >會員中心</router-link>
             </li>
             <!-- .dropdown Navbar選項使用下拉式選單 -->
             <!-- <li class="nav-item dropdown">
@@ -40,11 +48,12 @@
         </div>
 
         <div class="nav-right">
-          <ul>
+          <!-- <ul>
             <li>語言</li>
             <li>購物車</li>
             <li><router-link to="/Login">登入</router-link></li>
-          </ul>
+          </ul> -->
+          
           <!-- .navbar-toggler 漢堡式選單按鈕 -->
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" v-if="!desktop">
             <!-- .navbar-toggler-icon 漢堡式選單Icon -->
@@ -58,13 +67,19 @@
           <ul class="navbar-nav mr-auto">
             <!-- active表示當前頁面 -->
             <li class="nav-item">
-              <a class="nav-link" href="#">計費方式<span class="sr-only">(current)</span></a>
+              <router-link to="/Fare" class="nav-link" >計費方式<span class="sr-only">(current)</span></router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">預約流程</a>
+              <router-link to="/ReserveStep" class="nav-link" >預約流程</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">合作廠商</a>
+              <router-link to="/Company" class="nav-link" >合作廠商</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="/Login"  class="nav-link" >登入</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="/MemberCenter"  class="nav-link" >會員中心</router-link>
             </li>
             <!-- .dropdown Navbar選項使用下拉式選單 -->
             <!-- <li class="nav-item dropdown">
@@ -125,13 +140,77 @@ export default {
 </script>
 
 <style scoped lang="scss">
+  .bg{
+    background-color: #000000 !important;
+    padding: 0;
+  }
+  .container {
+    position: relative;
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.39);
+  }
+  .logo{
+    width: 90px;
+  }
+  .container{
+    justify-content: center;
+    align-items: stretch;
+  }
+  .navbar-collapse{
+    flex-grow: unset;
+    ul,li,a{
+      height: 100%;
+    }
+    a{
+      padding: 0;
+      line-height: 100px;
+    }
+  }
   .nav-right  {
+    position: absolute;
+    right: 0;
+    top: calc((116px - 39.5px) / 2);
     box-sizing: border-box;
     *{
       display: inline-block;
       padding: 0 5px;
       color: white;
     }
-
+  }
+  .navbar-toggler{
+    border-color: transparent;
+  }
+  .navbar-toggler-icon{
+    font-size: 25px;
+  }
+  .nav-link {
+    color: #d32a32 !important;
+    font-size: 20px;
+  }
+  .nav-item {
+    padding: 0 20px;
+  }
+  @media screen and (min-width: 992px) {
+    .logo{
+      transition: width 0.4s;
+      &:hover{
+        width: 120px;
+      }
+    }
+    .navbar-collapse{
+      a:hover{
+        color:white !important;
+        position: relative;
+        &::after{
+          content: '';
+          display: block;
+          width: 100%;
+          height: 6px;
+          background:white;
+          bottom: 0;
+          left: 0;
+          position: absolute;
+        }
+      }
+    }
   }
 </style>

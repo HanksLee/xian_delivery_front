@@ -61,7 +61,7 @@ export default {
   }
 
   .member-title {
-    background-color: #457fce;
+    background-color: #d32a32;
     color: white;
     line-height: 50px;
     text-align: center;
@@ -112,16 +112,17 @@ export default {
     }
 
     .location-btn {
-      color: white;
+      color: #ffffff;
       width: 100px;
       display: inline-block;
-      background: #b65b65 !important;
+      background: #d32a32 !important;
       // padding: 6px 0;
       font-weight: bold;
       font-size: 14px;
       -webkit-border-radius: 5px;
       border-radius: 5px;
       text-align: center;
+      cursor: pointer;
     }
   }
 
@@ -153,7 +154,7 @@ export default {
     }
 
     .member-btn {
-      background: #457fce;
+      background: #d32a32;
     }
 
     .back-btn {

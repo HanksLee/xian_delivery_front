@@ -4,7 +4,7 @@
     <div class="login-content">
       <div class="row">
         <div class="col-24 col-lg-12">
-          <p>使用機場快綫帳號登入</p>
+          <p>使用祥順國際帳號登入</p>
           <div class="login-box">
             <div class="input-container">
               <img src="../../../assets/img/email.png" alt="email.png" />
@@ -92,7 +92,7 @@ export default {
   }
 
   .login-title {
-    background-color: #457fce;
+    background-color: #d32a32;
     color: white;
     line-height: 50px;
     text-align: center;
@@ -143,6 +143,7 @@ export default {
             background-color: #d72828;
             color: #fff;
             padding: 0 10px;
+            cursor: pointer;
           }
         }
       }
@@ -198,7 +199,7 @@ export default {
       vertical-align: top;
       font-size: 18px;
       color: #fff;
-      background: #457fce;
+      background: #d32a32;
       position: relative;
       top: 0;
       opacity: 0.8;
@@ -242,7 +243,6 @@ export default {
     .forget-pwd-text {
       display: inline-block;
       line-height: 20px;
-      color: #457fce;
       position: relative;
       top: 13px;
       -webkit-transition: all 0.3s ease-in-out;

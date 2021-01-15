@@ -138,7 +138,7 @@ export default {
   }
 
   .member-title {
-    background-color: #457fce;
+    background-color: #d32a32;
     color: white;
     line-height: 50px;
     text-align: center;
@@ -248,7 +248,7 @@ export default {
     vertical-align: top;
     font-size: 18px;
     color: #fff;
-    background: #457fce;
+    background: #d32a32;
     position: relative;
     top: 0;
     opacity: 0.8;
@@ -314,7 +314,7 @@ export default {
     }
 
     .member-btn {
-      background: #457fce;
+      background: #d32a32;
     }
 
     .back-btn {

@@ -5,12 +5,17 @@ import App from './App';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import router from './router';
-import $ from 'jquery'
+import $ from 'jquery';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faFacebookF, faTwitter, faLinkedinIn, faGithub } from '@fortawesome/free-brands-svg-icons'
+
 
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
-
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+library.add(faFacebookF, faTwitter, faLinkedinIn, faGithub);
 //渲染vue
 /* eslint-disable no-new */
 new Vue({

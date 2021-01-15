@@ -63,7 +63,7 @@ export default {
   overflow: hidden;
 
   .tabbar-item {
-    background-color: rgba(#457fce,0.8);
+    background-color: rgba(#d32a32,0.8);
     text-align: center;
     color: white;
     line-height: 36px;
@@ -72,7 +72,7 @@ export default {
     transition: all 0.3s ease-in-out;
 
     &:hover, &.active {
-      background-color: #457fce;
+      background-color: #d32a32;
     }
 
   }

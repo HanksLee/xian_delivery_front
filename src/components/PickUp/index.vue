@@ -96,45 +96,54 @@ export default {
     width: 100px;
     padding: 10px 0;
     border-radius: 5px 5px 0 0;
-    background-color: rgba(227, 227, 227, 0.8);
+    background-color: #000000;
     text-align: center;
-    color: #333;
+    color: #d32a32;
     // line-height: 36px;
     cursor: pointer;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 
-    &.tab1:hover,
-    &.tab1.active {
-      background-color: #039ba1;
-      * {
-        color: white;
+    *{
+      color: #d32a32;
+    }
+    &:hover,&.active{
+      background: #d32a32;
+      *{
+        color:#ffffff;
       }
     }
+    // &.tab1:hover,
+    // &.tab1.active {
+    //   background-color: #039ba1;
+    //   * {
+    //     color: white;
+    //   }
+    // }
 
-    &.tab2:hover,
-    &.tab2.active {
-      background: #457fce;
-      * {
-        color: white;
-      }
-    }
+    // &.tab2:hover,
+    // &.tab2.active {
+    //   background: #457fce;
+    //   * {
+    //     color: white;
+    //   }
+    // }
 
-    &.tab3:hover,
-    &.tab3.active {
-      background: #d96608;
-      * {
-        color: white;
-      }
-    }
+    // &.tab3:hover,
+    // &.tab3.active {
+    //   background: #d96608;
+    //   * {
+    //     color: white;
+    //   }
+    // }
 
-    &.tab4:hover,
-    &.tab4.active {
-      background: #309e2b;
-      * {
-        color: white;
-      }
-    }
+    // &.tab4:hover,
+    // &.tab4.active {
+    //   background: #309e2b;
+    //   * {
+    //     color: white;
+    //   }
+    // }
   }
 
   .tabbar-item + .tabbar-item {
