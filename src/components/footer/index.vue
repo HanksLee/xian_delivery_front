@@ -6,11 +6,12 @@
           <div class="col-24 col-lg-12 footer-top">
             <h1>祥順國際租賃</h1>
             <p class="link">
-              <span>首頁</span><span>．</span>
-              <span>計價方式</span><span>．</span>
-              <span>最新消息</span><span>．</span>
-              <span>合作廠商</span><span>．</span>
-              <span>ＦＡＱ？</span>
+              <span><router-link to="/">首頁</router-link></span><span>．</span>
+              <span><router-link to="/Fare">計價方式</router-link></span><span>．</span>
+              <span><router-link to="/PickUp">預約</router-link></span>
+              <!-- <span>最新消息</span><span>．</span> -->
+              <!-- <span>合作廠商</span><span>．</span> -->
+              <!-- <span>ＦＡＱ？</span> -->
             </p>
             <p>祥順 © 2020</p>
           </div>

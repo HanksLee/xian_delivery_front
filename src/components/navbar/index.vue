@@ -21,14 +21,17 @@
             <li class="nav-item">
               <router-link to="/ReserveStep" class="nav-link" >預約流程</router-link>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <router-link to="/Company" class="nav-link" >合作廠商</router-link>
+            </li> -->
+            <li class="nav-item" v-if="token">
+              <router-link to="/MemberCenter"  class="nav-link" >會員中心</router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" v-else>
               <router-link to="/Login"  class="nav-link" >登入</router-link>
             </li>
-            <li class="nav-item">
-              <router-link to="/MemberCenter"  class="nav-link" >會員中心</router-link>
+            <li class="nav-item" v-if="token" >
+              <a class="nav-link" @click="(e)=>{logout(e)}">登出</a>
             </li>
             <!-- .dropdown Navbar選項使用下拉式選單 -->
             <!-- <li class="nav-item dropdown">
@@ -72,14 +75,17 @@
             <li class="nav-item">
               <router-link to="/ReserveStep" class="nav-link" >預約流程</router-link>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <router-link to="/Company" class="nav-link" >合作廠商</router-link>
+            </li> -->
+            <li class="nav-item" v-if="token">
+              <router-link to="/MemberCenter"  class="nav-link" >會員中心</router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" v-else>
               <router-link to="/Login"  class="nav-link" >登入</router-link>
             </li>
-            <li class="nav-item">
-              <router-link to="/MemberCenter"  class="nav-link" >會員中心</router-link>
+            <li class="nav-item" v-if="token">
+              <a class="nav-link" @click="(e)=>{logout(e)}">登出</a>
             </li>
             <!-- .dropdown Navbar選項使用下拉式選單 -->
             <!-- <li class="nav-item dropdown">
@@ -114,6 +120,7 @@ export default {
   data() {
     return {
       desktop: true, //偵測螢幕尺寸
+      token: sessionStorage.getItem('token')
     };
   },
   methods: {
@@ -126,6 +133,20 @@ export default {
         this.desktop = false;
       }
     },
+    async logout(e){
+      e.preventDefault();
+      e.stopPropagation();
+      const res = await axios.post(`${window.location.origin}/api/logout`,{
+        header: {
+          Authentication: sessionStorage.getItem('token')
+        }
+      })
+      if(res.status === "success"){
+        sessionStorage.removeItem('token');
+        this.$router.push({ path: '/' });
+        window.location.reload();
+      }
+    }
   },
   created() {
     window.addEventListener('resize', this.watchWindowSize);

@@ -131,7 +131,7 @@ export default {
       .price {
         text-align: right;
         span {
-          color: #2aa7ee;
+          color: #d32a32;
           font-size: 26px;
           padding-left: 5px;
         }

@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="submit-container">
-        <span class="back-btn">回首頁</span>
+        <!-- <span class="back-btn">回首頁</span> -->
         <span class="member-btn">送出</span>
       </div>
     </el-form>

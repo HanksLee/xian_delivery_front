@@ -6,6 +6,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import router from './router';
 import $ from 'jquery';
+import axios from 'axios';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faFacebookF, faTwitter, faLinkedinIn, faGithub } from '@fortawesome/free-brands-svg-icons'
@@ -13,7 +14,8 @@ import { faFacebookF, faTwitter, faLinkedinIn, faGithub } from '@fortawesome/fre
 
 Vue.config.productionTip = false;
 
-Vue.use(ElementUI);
+Vue.use(ElementUI,axios);
+window.axios = require('axios');
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 library.add(faFacebookF, faTwitter, faLinkedinIn, faGithub);
 //渲染vue
@@ -36,7 +38,7 @@ $(document).ready(function() {
 
           var bottom_of_object = $(this).offset().top ;
           var bottom_of_window = $(window).scrollTop() + $(window).height();
-          console.log(bottom_of_object,bottom_of_window)
+          // console.log(bottom_of_object,bottom_of_window)
           /* If the object is completely visible in the window, fade it it */
           if( bottom_of_window > bottom_of_object ){
 
@@ -50,7 +52,7 @@ $(document).ready(function() {
 
         var bottom_of_object = $(this).offset().top ;
         var bottom_of_window = $(window).scrollTop() + $(window).height();
-        console.log(bottom_of_object,bottom_of_window)
+        // console.log(bottom_of_object,bottom_of_window)
         /* If the object is completely visible in the window, fade it it */
         if( bottom_of_window > bottom_of_object ){
 

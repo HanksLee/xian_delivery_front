@@ -3,7 +3,7 @@
     <div class="container-sm">
       <div class="add-driver-wrap">
         <div class="add-driver-container">
-          <el-form v-model="formData">
+          <el-form v-model="redisterDriverParams">
             <p class="add-driver-title">加入駕駛</p>
             <div>
               <div class="input-container">
@@ -11,39 +11,41 @@
                   <div class="col-24">
                     <el-form-item>
                       <el-input
-                        v-model="formData.email"
+                        v-model="redisterDriverParams.email"
                         placeholder="請輸入e-mail"
                       ></el-input>
                     </el-form-item>
                     <el-form-item>
                       <el-input
-                        v-model="formData.name"
+                        v-model="redisterDriverParams.name"
                         placeholder="請輸入姓名"
                       ></el-input>
                     </el-form-item>
                     <el-form-item>
                       <el-input
-                        v-model="formData.phone"
-                        placeholder="請輸入姓名"
-                      ></el-input>
-                    </el-form-item>
-                    <el-form-item>
-                      <el-input
-                        v-model="formData.password"
+                        type="password"
+                        v-model="redisterDriverParams.phone"
                         placeholder="請輸入密碼"
                       ></el-input>
                     </el-form-item>
                     <el-form-item>
                       <el-input
-                        v-model="formData.city"
-                        placeholder="請輸入城市"
+                        type="password"
+                        v-model="redisterDriverParams.c_password"
+                        placeholder="請再次輸入密碼"
                       ></el-input>
                     </el-form-item>
+                    <!-- <el-form-item>
+                      <el-input
+                        v-model="redisterDriverParams.city"
+                        placeholder="請輸入城市"
+                      ></el-input>
+                    </el-form-item> -->
                   </div>
                 </div>
               </div>
               <div class="submit-container">
-                <span class="add-driver-btn">送出</span>
+                <span class="add-driver-btn" @click="registerDriver">送出</span>
               </div>
             </div>
           </el-form>
@@ -60,12 +62,12 @@ export default {
   name: 'OrderSearch',
   data(){
     return{
-      formData: {
-        email:"",
-        name:"",
-        phone:"",
-        password:"",
-        city:""
+      redisterDriverParams: {
+        email: undefined,
+        name: undefined,
+        password: undefined,
+        c_password: undefined,
+        type: "driver"
       }
     }
   },
@@ -73,7 +75,25 @@ export default {
 
   },
   methods:{
-
+    async registerDriver(){
+      const { name, email, password, c_password } = this.registerDriverParams;
+      if(!name || !email || !password || !c_password ) {
+        alert("欄位有空，請再次檢查");
+        return;
+        }
+      if(password !== c_password){
+        alert("密碼跟確認密碼不一致");
+        return;
+      }
+      const res = await axios.post(`${window.location.origin}/api/register`,{
+        ...this.registerDirverParams
+      })
+      if(res.status === "success"){
+        alert("註冊成功");
+      }else{
+        alert("註冊失敗");
+      }
+    },
   },
   mounted(){
   }

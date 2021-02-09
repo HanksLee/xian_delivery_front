@@ -85,19 +85,19 @@
                 />
               </el-form-item>
             </div>
-            <div class="other-login-btn-container">
+            <!-- <div class="other-login-btn-container">
               <span class="login-btn fb-login">
                 <img src="../../../assets/img/facebook.png" alt="facebook.png" />使用Facrbook帳號登入
               </span>
               <span class="login-btn google-login">
                 <img src="../../../assets/img/google.png" alt="google.png" />使用Google帳號登入
               </span>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
       <div class="submit-container">
-        <span class="back-btn">回首頁</span>
+        <!-- <span class="back-btn">回首頁</span> -->
         <span class="member-btn">送出</span>
       </div>
     </el-form>

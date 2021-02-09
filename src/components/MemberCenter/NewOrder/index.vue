@@ -84,10 +84,10 @@
         <p>您目前沒有訂單紀錄</p>
       </div>
     </div>
-    <div class="submit-container">
+    <!-- <div class="submit-container">
       <span class="back-btn">回首頁</span>
-      <!-- <span class="member-btn">送出</span> -->
-    </div>
+      <span class="member-btn">送出</span>
+    </div> -->
   </div>
 </template>
 

@@ -9,15 +9,24 @@
           </div>
           <div class="input-container">
             <div class="row">
-              <div class="col-24 location-text">上下車地點順序如下(若有多項地址，請拖曳地址進行排序)</div>
-              <div class="col-24">
+              <div class="col-24 location-placeholder">上下車地點順序如下(最多可新增5個地點)</div>
+              <div class="location-text">
+                <p
+                  v-for="(item,index) in tempLocations"
+                  :key="index">
+                  <span>{{item}}</span>
+                  <span><i class="el-icon-close" @click="handleRemoveLocation(index)"></i></span>
+                </p>
+              </div>
+              <div class="col-24 location-input-container">
                 <el-form-item>
                   <el-input
-                    v-model="formData.location"
+                    v-model="location"
                     placeholder="請填寫目的地"
                     class="input-item location-input"
+                    :disabled = "tempLocations.length >= 5"
                   ></el-input>
-                  <div class="location-btn">確認填寫</div>
+                  <div class="location-btn" @click="handleAddLocation">新增</div>
                 </el-form-item>
               </div>
             </div>
@@ -32,15 +41,15 @@
               <div class="col-12">
                 <el-form-item>
                   <el-select
-                    v-model="formData.airport"
+                    v-model="formData.airport_id"
                     style="width:100%;margin-bottom:0"
                     class="input-item"
                   >
                     <el-option
                       v-for="item in airportOptions"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
                     ></el-option>
                   </el-select>
                 </el-form-item>
@@ -56,26 +65,24 @@
             <div class="row">
               <div class="col-24">
                 <el-form-item label="預約方式">
-                  <el-radio-group v-model="formData.type" style="vertical-align:initial">
-                    <el-radio label="航班抵達時間"></el-radio>
-                    <el-radio label="指定時間"></el-radio>
+                  <el-radio-group v-model="formData.reserve_type" style="vertical-align:initial">
+                    <el-radio label="0">航班抵達時間</el-radio>
+                    <el-radio label="1">指定時間</el-radio>
                   </el-radio-group>
                 </el-form-item>
               </div>
-              <div class="col-24">
+              <div class="col-14">
                 <el-form-item>
                   <el-date-picker
-                    v-model="formData.year"
-                    type="date"
-                    placeholder
-                    format="yyyy/MM/dd"
+                    v-model="formData.reserve_at"
+                    type="datetime"
                   ></el-date-picker>
                 </el-form-item>
               </div>
               <div class="col-14">
                 <el-form-item>
                   <el-input
-                    v-model="formData.airplaneNum"
+                    v-model="formData.flight_num"
                     placeholder="請填寫航班編號"
                     class="input-item"
                     style="margin-bottom:0"
@@ -86,15 +93,15 @@
                 <div class="col-10" style="padding:0">
                   <el-form-item>
                     <el-select
-                      v-model="formData.carType"
+                      v-model="formData.car_type_id"
                       style="width:100%;margin-bottom:0"
                       class="input-item"
                     >
                       <el-option
                         v-for="item in carOptions"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id"
                       ></el-option>
                     </el-select>
                   </el-form-item>
@@ -104,7 +111,7 @@
                 <div class="col-10" style="padding:0">
                   <el-form-item>
                     <el-select
-                      v-model="formData.people"
+                      v-model="formData.passenger_num"
                       style="width:100%;margin-bottom:0"
                       class="input-item"
                     >
@@ -122,7 +129,7 @@
                 <div class="col-10" style="padding:0">
                   <el-form-item>
                     <el-select
-                      v-model="formData.package"
+                      v-model="formData.luggage_num"
                       style="width:100%;margin-bottom:0"
                       class="input-item"
                     >
@@ -139,12 +146,10 @@
               <div class="col-24">
                 <div class="col-24 col-lg-10" style="padding:0">
                   <el-form-item>
-                    <el-checkbox v-model="formData.raiseCard">
-                      <span>加購舉牌服務費用?(+$100)</span>
-                    </el-checkbox>
+                    <el-checkbox v-model="need_welcome_fee" @change="handleFeeChange"><span>加購舉牌服務費用?(+$100)</span></el-checkbox>
                   </el-form-item>
                 </div>
-                <div v-if="formData.raiseCard" class="col-18" style="padding:0">
+                <!-- <div v-if="formData.raiseCard" class="col-18" style="padding:0">
                   <el-form-item>
                     <el-input
                       type="textarea"
@@ -152,12 +157,12 @@
                       placeholder="請輸入內容"
                     ></el-input>
                   </el-form-item>
-                </div>
+                </div> -->
               </div>
               <div class="col-24">
                 <div class="col-24 col-lg-10" style="padding:0">
                   <el-form-item>
-                    <el-checkbox v-model="formData.seats">
+                    <el-checkbox v-model="need_extra_item" @change="handleExtraItemChange">
                       <span>加購安全座椅及其他服務?</span>
                       <p class="highlight">(兒童座椅、增高墊等等......)</p>
                     </el-checkbox>
@@ -173,7 +178,7 @@
               </div>
               <div class="col-18">
                 <el-form-item>
-                  <el-input v-model="formData.coupon" placeholder="請輸入折扣碼" class="input-item"></el-input>
+                  <el-input v-model="formData.coupon_code" placeholder="請輸入折扣碼" class="input-item"></el-input>
                 </el-form-item>
               </div>
             </div>
@@ -188,28 +193,28 @@
             <div class="row">
               <div class="col-24 col-lg-12">
                 <el-form-item>
-                  <el-input v-model="formData.name" placeholder="請填寫姓名" class="input-item" />
+                  <el-input v-model="formData.passenger_name" placeholder="請填寫姓名" class="input-item" />
                   <span class="highlight">*</span>
                 </el-form-item>
               </div>
               <div class="col-24 col-lg-12">
                 <el-form-item>
-                  <el-input v-model="formData.mobile" placeholder="請填寫行動電話" class="input-item" />
+                  <el-input v-model="formData.passenger_mobile" placeholder="請填寫行動電話" class="input-item" />
                   <span class="highlight">*</span>
                 </el-form-item>
               </div>
               <div class="col-24">
                 <el-form-item>
-                  <el-input v-model="formData.email" placeholder="請填寫電子信箱" class="input-item" />
+                  <el-input v-model="formData.passenger_email" placeholder="請填寫電子信箱" class="input-item" />
                   <span class="highlight">*</span>
                 </el-form-item>
               </div>
               <div class="col-24">
                 <el-form-item>
                   <el-input
-                    v-model="formData.question"
+                    v-model="formData.passenger_memo"
                     type="textarea"
-                    placeholder="請填寫問題說明"
+                    placeholder="請填寫備註"
                     class="input-item"
                   />
                 </el-form-item>
@@ -217,7 +222,7 @@
             </div>
           </div>
         </div>
-        <div class="question-container">
+        <!-- <div class="question-container">
           <div>
             <p class="question-text">其他聯絡方式</p>
           </div>
@@ -297,25 +302,26 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="cost-container">
           <div class="row">
             <div class="col-8">
               <p class="cost-title">車種</p>
-              <p class="cost-info">{{formData.carType}}</p>
+              <p class="cost-info">{{carOptions[formData.car_type_id].name === "請填寫座車" ? "-" : carOptions[formData.car_type_id].name }}</p>
             </div>
             <div class="col-8">
               <p class="cost-title">預估行車時間</p>
-              <p class="cost-info">{{"70分鐘"}}</p>
+              <p class="cost-info">{{formData.total_duration ? formData.total_duration : "-"}}</p>
             </div>
             <div class="col-8">
               <p class="cost-title">費用試算</p>
-              <p class="cost-info">{{"$999"}}</p>
+              <p class="cost-info">{{formData.total_amount ? formData.total_amount : "-"}}</p>
             </div>
           </div>
         </div>
         <div class="submit-container">
-          <span class="company-btn">送出</span>
+          <span class="submit-btn computed-btn" @click="handleGetDistance">試算金額</span>
+          <span class="submit-btn" @click="handleSubmit">送出</span>
         </div>
       </el-form>
     </div>
@@ -324,81 +330,58 @@
 
 <script>
 export default {
-  name: "pick-up-tab1",
+  name: "pick-up-tab2",
+  props: ['airplaneType',"carType"],
   data() {
     return {
-      formData: {
-        airport: 1,
-        location: "",
-        type: "指定時間",
-        year: new Date(),
-        airplaneNum: "",
-        carType: "舒適四人座",
-        people: 1,
-        package: 1,
-        raiseCard: false,
-        raiseCardRemarks: "",
-        seats: false,
-        coupon: "",
-        name: "",
-        mobile: "",
-        email: "",
-        question: "",
-        contactInfo: {
-          departant: "",
-          hotel: "",
-          line: "",
-          otherPersonMobile: "",
-          weChat: "",
-          twitter: "",
-          whatsApp: "",
-          facebook: ""
-        }
-      },
-      airportOptions: [
-        {
-          value: 1,
-          label: "台灣桃園國際機場"
-        },
-        {
-          value: 2,
-          label: "台北松山機場"
-        },
-        {
-          value: 3,
-          label: "台中國際機場"
-        },
-        {
-          value: 4,
-          label: "高雄小港機場"
-        },
-        {
-          value: 5,
-          label: "台南航空站"
-        },
-        {
-          value: 6,
-          label: "花蓮國際機場"
-        }
-      ],
-      carOptions: [
-        {
-          value: "舒適四人座",
-          label: "舒適四人座"
-        },
-        {
-          value: "舒適六人座",
-          label: "舒適六人座"
-        },
-        {
-          value: "舒適八人座",
-          label: "舒適八人座"
-        },
-        {
-          value: "雙B進口轎車",
-          label: "雙B進口轎車"
-        }
-      ],
+      need_welcome_fee: false,
+      need_extra_item: false,
+      airportOptions: this.airplaneType,
+      carOptions: this.carType,
+      // airportOptions: [
+      //   {
+      //     value: 1,
+      //     label: "台灣桃園國際機場"
+      //   },
+      //   {
+      //     value: 2,
+      //     label: "台北松山機場"
+      //   },
+      //   {
+      //     value: 3,
+      //     label: "台中國際機場"
+      //   },
+      //   {
+      //     value: 4,
+      //     label: "高雄小港機場"
+      //   },
+      //   {
+      //     value: 5,
+      //     label: "台南航空站"
+      //   },
+      //   {
+      //     value: 6,
+      //     label: "花蓮國際機場"
+      //   }
+      // ],
+      // carOptions: [
+      //   {
+      //     value: "舒適四人座",
+      //     label: "舒適四人座"
+      //   },
+      //   {
+      //     value: "舒適六人座",
+      //     label: "舒適六人座"
+      //   },
+      //   {
+      //     value: "舒適八人座",
+      //     label: "舒適八人座"
+      //   },
+      //   {
+      //     value: "雙B進口轎車",
+      //     label: "雙B進口轎車"
+      //   }
+      // ],
       peopleOptions: [
         {
           value: 1,
@@ -419,27 +402,151 @@ export default {
       ],
       packageOptions: [
         {
-          value: 1,
+          value: 0,
           label: "無行李"
         },
         {
-          value: 2,
+          value: 1,
           label: "1件行李"
         },
         {
-          value: 3,
+          value: 2,
           label: "2件行李"
         },
         {
-          value: 4,
+          value: 3,
           label: "3件行李"
         }
-      ]
+      ],
+      location: "",
+      tempLocations: [],
+      formData: {
+        pickup_type: 1,
+        airport_id: 0,
+        locations: [],
+        reserve_type: "0",
+        reserve_at: new Date(),
+        flight_num: "",
+        car_type_id: 0,
+        passenger_num: 1,
+        luggage_num: 0,
+        need_welcome_fee: 0,
+        // raiseCardRemarks: "",
+        need_extra_item: 0,
+        coupon_code: "",
+        passenger_name: "",
+        passenger_mobile: "",
+        passenger_email: "",
+        passenger_memo: "",
+        total_distance: undefined,
+        total_duration: undefined,
+        total_amount: undefined
+        // contactInfo: {
+        //   departant: "",
+        //   hotel: "",
+        //   line: "",
+        //   otherPersonMobile: "",
+        //   weChat: "",
+        //   twitter: "",
+        //   whatsApp: "",
+        //   facebook: ""
+        // }
+      },
     };
   },
   components: {},
-  methods: {},
-  mounted() {}
+  methods: {
+    handleFeeChange(e){
+      if(e){
+        this.formData.need_welcome_fee = 1;
+      }else{
+        this.formData.need_welcome_fee = 0;
+      }
+    },
+    handleExtraItemChange(e){
+      if(e){
+        this.formData.need_extra_item = 1;
+      }else{
+        this.formData.need_extra_item = 0;
+      }
+    },
+    handleAddLocation(){
+      if(this.location !== "" && 
+         this.tempLocations.indexOf(this.location) < 0 && 
+         this.tempLocations.length <= 5){
+        this.tempLocations.push(this.location);
+        this.location = "";
+      }
+    },
+    handleRemoveLocation(index){
+      this.tempLocations.splice(index, 1);
+    },
+    async handleGetDistance() {
+      if(!sessionStorage.getItem('token')){
+        alert("請先登入");
+        return ;
+      }
+      if(this.airportOptions[this.formData.airport_id].id === 0){
+        alert("請選擇機場");
+        return ;
+      }
+
+      if(this.tempLocations.length === 0){
+        alert("請填寫目的地");
+        return ;
+      }
+      const origins = `origins=${this.tempLocations.join("|")}`;
+      const destinations = `destinations=${this.airportOptions[this.formData.airport_id].name}`;
+      const res = await axios.post(`${window.location.origin}/api/v1/distance?${origins}&${destinations}`,{
+        header: {
+          Authentication: sessionStorage.getItem('token')
+        }
+      })
+      if(res.status === "success"){
+        const{ total_amount, total_duration, total_distance } = res.data;
+        this.formData.total_distance = total_distance;
+        this.formData.total_duration = total_duration;
+        this.formData.total_amount = total_amount;
+      }
+    },
+    async handleSubmit(){
+      if(!sessionStorage.getItem('token')){
+        alert("請先登入");
+        return ;
+      }
+      if(!this.formData.total_distance || !this.formData.total_duration || !this.formData.total_amount){
+        alert("請先進行費用試算");
+        return;
+      }
+      if(!this.formData.passenger_name || !this.formData.passenger_mobile || !this.formData.passenger_email){
+        alert("姓名、手機、信箱為必填");
+        return;
+      }
+
+      this.formData.locations = this.tempLocations.map((location,index)=>{
+        return{
+          address: location,
+          boarding_order: index + 1
+        }
+      })
+      
+      const res = await axios.post(`${window.location.origin}/api/v1/order`,{
+        ...this.formData
+      },{
+        header: {
+          Authentication: sessionStorage.getItem('token')
+        }
+      })
+      if(res.status === "success"){
+        alert("申請成功");
+        this.$router.push({ path: '/' });
+      }else{
+        alert("申請失敗，請洽詢客服");
+      }
+    }
+  },
+  mounted() {
+  }
 };
 </script>
 
@@ -475,6 +582,11 @@ export default {
       margin-bottom: 5px;
     }
 
+    .el-date-editor.el-input{
+      max-width: calc(100% - 20px);
+      width: 100%;
+    }
+
     .el-input__inner {
     }
 
@@ -490,11 +602,36 @@ export default {
       margin-bottom: 20px;
     }
 
-    .location-text {
+    .location-placeholder {
       padding: 20px 50px;
-      border-bottom: 1px dashed #ccc;
       text-align: center;
-      margin-bottom: 20px;
+    }
+
+    .location-text {
+      padding: 0 30px 20px;
+      width: 100%;
+      > p {
+        display: flex;
+        align-items: center;
+        span:first-child {
+          flex: 1;
+        }
+        span:last-child {
+          font-size: 24px;
+          flex-basis: 24px;
+          > i{
+            background: #d35a2a;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    .location-input-container {
+      border-top: 1px dashed #ccc;
+      padding-top: 20px;
     }
 
     .location-input {
@@ -513,6 +650,7 @@ export default {
       -webkit-border-radius: 5px;
       border-radius: 5px;
       text-align: center;
+      cursor: pointer;
     }
   }
 
@@ -547,7 +685,7 @@ export default {
     text-align: right;
     border-top: 1px solid #ccc;
 
-    .company-btn {
+    .submit-btn {
       display: inline-block;
       vertical-align: top;
       font-size: 18px;
@@ -566,6 +704,14 @@ export default {
         cursor: pointer;
         opacity: 1;
       }
+    }
+
+    .computed-btn {
+      background: #409EFF;
+    }
+
+    .submit-btn + .submit-btn {
+      margin-left: 10px;
     }
   }
 

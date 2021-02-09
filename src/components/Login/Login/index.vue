@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <p class="login-title">會員登入/註冊</p>
+    <p class="login-title">會員登入/一般會員註冊</p>
     <div class="login-content">
       <div class="row">
         <div class="col-24 col-lg-12">
@@ -8,53 +8,57 @@
           <div class="login-box">
             <div class="input-container">
               <img src="../../../assets/img/email.png" alt="email.png" />
-              <input type="text" placeholder="請填寫帳號(電子郵件)" />
+              <input type="text" placeholder="請填寫信箱" v-model="loginParams.email"/>
             </div>
             <div class="input-container">
               <img src="../../../assets/img/password.png" alt="password.png" />
-              <input type="text" placeholder="請填寫密碼" />
+              <input type="text" placeholder="請填寫密碼" v-model="loginParams.password"/>
             </div>
             <div class="login-btn-container">
-              <span class="login-btn">登入</span>
-              <span class="forget-pwd-text">忘記密碼？</span>
+              <span class="login-btn" @click="login">登入</span>
+              <!-- <span class="forget-pwd-text">忘記密碼？</span> -->
             </div>
           </div>
-          <div class="other-login-btn-container">
+          <!-- <div class="other-login-btn-container">
             <span class="login-btn fb-login">
               <img src="../../../assets/img/facebook.png" alt="facebook.png" />使用Facrbook帳號登入
             </span>
             <span class="login-btn google-login">
               <img src="../../../assets/img/google.png" alt="google.png" />使用Google帳號登入
             </span>
-          </div>
+          </div> -->
         </div>
         <div class="col-24 col-lg-12">
-          <p>初次加入註冊會員</p>
+          <p>初次加入註冊一般會員</p>
           <div class="register-box">
             <div class="input-container">
               <img src="../../../assets/img/member.png" alt="member.png" />
-              <input type="text" placeholder="請填寫姓名" />
+              <input type="text" placeholder="請填寫姓名" v-model="registerUserParams.name" />
             </div>
             <div class="input-container">
               <img src="../../../assets/img/email.png" alt="email.png" />
-              <input type="text" placeholder="請填寫帳號(電子郵件)" />
+              <input type="text" placeholder="請填寫帳號(電子郵件)" v-model="registerUserParams.email"/>
             </div>
             <div class="input-container">
               <img src="../../../assets/img/password.png" alt="password.png" />
-              <input type="text" placeholder="請填寫密碼" />
+              <input type="password" placeholder="請填寫密碼" v-model="registerUserParams.password" />
             </div>
             <div class="input-container">
-              <img src="../../../assets/img/tel.png" alt="tel.png" />
-              <input type="text" placeholder="請填寫電話" />
+              <img src="../../../assets/img/password.png" alt="password.png" />
+              <input type="password" placeholder="請再次輸入密碼" v-model="registerUserParams.c_password" />
             </div>
-            <div class="input-container captcha-container">
+            <!-- <div class="input-container">
+              <img src="../../../assets/img/tel.png" alt="tel.png" />
+              <input type="text" placeholder="請填寫電話" v-model="registerParams.phone" />
+            </div> -->
+            <!-- <div class="input-container captcha-container">
               <img src alt />
               <input type="text" placeholder="請填寫驗證碼" />
               <span class="get-captcha">獲取驗證碼</span>
-            </div>
+            </div> -->
           </div>
           <div class="register-btn-container">
-            <span class="register-btn">確認</span>
+            <span class="register-btn" @click="registerUser">確認</span>
             <p>若按下「註冊會員」，即表示您同意 使用條款 並確認您已詳閱隱私政策、「租賃定型化契約」。</p>
           </div>
         </div>
@@ -66,9 +70,61 @@
 <script>
 export default {
   name: "LoginModule",
+  data: function() {
+    return {
+      registerUserParams: {
+        name: undefined,
+        email: undefined,
+        password: undefined,
+        c_password: undefined,
+        type: "user"
+      },
+      loginParams: {
+        email: undefined,
+        password: undefined
+      }
+    }
+  },
   components: {},
-  methods: {},
-  mounted() {}
+  methods: {
+    async registerUser(){
+      const { name, email, password, c_password } = this.registerUserParams;
+      if(!name || !email || !password || !c_password ) {
+        alert("欄位有空，請再次檢查");
+        return;
+        }
+      if(password !== c_password){
+        alert("密碼跟確認密碼不一致");
+        return;
+      }
+      const res = await axios.post(`${window.location.origin}/api/register`,{
+        ...this.registerUserParams
+      })
+      if(res.status === "success"){
+        alert("註冊成功");
+      }else{
+        alert("註冊失敗");
+      }
+    },
+    async login(){
+      const { email, password } = this.loginParams;
+      if(!email || !password) return;
+      const res = await axios.post(`${window.location.origin}/api/login`,{
+        ...this.loginParams
+      })
+      if(res.status === "success"){
+        const { token } = res.data;
+        sessionStorage.setItem('token', token);
+        this.$router.push({ path: '/' });
+        window.location.reload();
+
+      }else{
+        alert("登入失敗");
+      }
+    }
+  },
+  mounted() {
+  }
 };
 </script>
 

@@ -1,97 +1,94 @@
 <template>
   <div class="member-container">
     <p class="member-title">會員中心/歷史訂單</p>
-    <!-- <div class="question-container">
-              <div class="input-container">
-                <div class="row">
-                  <div class="col-24 col-lg-12">
-                    <el-form-item>
-                      <el-input
-                        v-model="formData.contactInfo.departant"
-                        placeholder="請輸入社區或大樓名稱"
-                        class="input-item"
-                      />
-                    </el-form-item>
-                  </div>
-                  <div class="col-24 col-lg-12">
-                    <el-form-item>
-                      <el-input
-                        v-model="formData.contactInfo.hotel"
-                        placeholder="請輸入飯店及房號"
-                        class="input-item"
-                      />
-                    </el-form-item>
-                  </div>
-                  <div class="col-24 col-lg-12">
-                    <el-form-item>
-                      <el-input
-                        v-model="formData.contactInfo.line"
-                        placeholder="請輸入Line"
-                        class="input-item"
-                      />
-                    </el-form-item>
-                  </div>
-                  <div class="col-24 col-lg-12">
-                    <el-form-item>
-                      <el-input
-                        v-model="formData.contactInfo.otherPersonMobile"
-                        placeholder="請輸入其他搭車人電話"
-                        class="input-item"
-                      />
-                    </el-form-item>
-                  </div>
-                  <div class="col-24 col-lg-12">
-                    <el-form-item>
-                      <el-input
-                        v-model="formData.contactInfo.weChat"
-                        placeholder="請輸入WeChat"
-                        class="input-item"
-                      />
-                    </el-form-item>
-                  </div>
-                  <div class="col-24 col-lg-12">
-                    <el-form-item>
-                      <el-input
-                        v-model="formData.contactInfo.twitter"
-                        placeholder="請輸入Twitter"
-                        class="input-item"
-                      />
-                    </el-form-item>
-                  </div>
-                  <div class="col-24 col-lg-12">
-                    <el-form-item>
-                      <el-input
-                        v-model="formData.contactInfo.whatsApp"
-                        placeholder="請輸入What's app"
-                        class="input-item"
-                      />
-                    </el-form-item>
-                  </div>
-                  <div class="col-24 col-lg-12">
-                    <el-form-item>
-                      <el-input
-                        v-model="formData.contactInfo.facebook"
-                        placeholder="請輸入Facebook"
-                        class="input-item"
-                      />
-                    </el-form-item>
-                  </div>
-                </div>
-              </div>
-    </div>-->
     <div class="history-container">
-      <div class="remarks">
+      <!-- <div class="remarks">
         您評分過「非常不滿意」及「有待加強」的司機，未來將不再由他們服務您，確保您的乘車品質。
         <br />司機們不會知道評分對象，請放心
-      </div>
+      </div> -->
       <div class="history-info">
-        <p>您目前沒有訂單紀錄</p>
+        <p v-if="orderList.length === 0">您目前沒有訂單紀錄</p>
+        <el-table
+          v-else
+          :data="orderList"
+          border
+          style="width: 100%">
+          <el-table-column
+            fixed
+            prop="id"
+            label="訂單編號"
+            width="120">
+          </el-table-column>
+          <el-table-column
+            fixed
+            prop="total_amount"
+            label="金額"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            prop="passenger_name"
+            label="姓名"
+            width="120">
+          </el-table-column>
+          <el-table-column
+            prop="passenger_mobile"
+            label="手機"
+            width="150">
+          </el-table-column>
+          <el-table-column
+            prop="passenger_email"
+            label="信箱"
+            width="300">
+          </el-table-column>
+          <el-table-column
+            prop="passenger_memo"
+            label="備註"
+            width="300">
+          </el-table-column>
+          <el-table-column
+            prop="reserve_at"
+            label="抵達時間"
+            width="300">
+          </el-table-column>
+          <el-table-column
+            prop="flight_num"
+            label="航班編號"
+            width="150">
+          </el-table-column>
+          <el-table-column
+            prop="passenger_num"
+            label="乘客人數"
+            width="150">
+          </el-table-column>
+          <el-table-column
+            prop="luggage_num"
+            label="行李數量"
+            width="150">
+          </el-table-column>
+          <el-table-column
+            label="機場"
+            width="150">
+            {{airplaneType.name}}
+          </el-table-column>
+          <el-table-column
+            label="座車"
+            width="150">
+            {{carType.name}}
+          </el-table-column>
+        </el-table>
+        <div class="block" v-if="orderList.length !== 0">
+          <el-pagination
+            layout="prev, pager, next"
+            :total="totalCount"
+            @current-change="pageChange">
+          </el-pagination>
+        </div>
       </div>
     </div>
-    <div class="submit-container">
-      <span class="back-btn">回首頁</span>
-      <!-- <span class="member-btn">送出</span> -->
-    </div>
+    <!-- <div class="submit-container">
+      <span class="back-btn" @click="goToHome">回首頁</span>
+      <span class="member-btn">送出</span>
+    </div> -->
   </div>
 </template>
 
@@ -99,11 +96,103 @@
 export default {
   name: "member",
   data() {
-    return {};
+    return {
+      airplaneType: {
+        id: 0,
+        name: "-"
+      },
+      carType: {
+        id: 0,
+        name: "-"
+      },
+      totalCount: 0,
+      page: 1,
+      pageNum: 10,
+      orderList: [
+      //   {
+      //           "id": 1,
+      //           "user_id": "1",
+      //           "airport_id": "0",
+      //           "car_type_id": "0",
+      //           "pro_status": "0",
+      //           "pickup_type": "0",
+      //           "reserve_type": "0",
+      //           "reserve_at": "2020-11-09 09:00:00.000",
+      //           "flight_num": "A1234",
+      //           "passenger_num": "1",
+      //           "luggage_num": "1",
+      //           "need_welcome_fee": "0",
+      //           "need_extra_item": "0",
+      //           "coupon_code": null,
+      //           "passenger_name": "test name",
+      //           "passenger_mobile": "0900000001",
+      //           "passenger_email": "user@example.com",
+      //           "passenger_memo": "test memo",
+      //           "total_distance": "167820.00",
+      //           "total_duration": "8293.00",
+      //           "total_amount": "1000.00",
+      //           "created_at": "2021-02-04T14:58:09.780000Z",
+      //           "updated_at": "2021-02-04T14:58:09.780000Z",
+      //           "order_locations": []
+      // }
+      ],
+    };
   },
   components: {},
-  methods: {},
-  mounted() {}
+  methods: {
+    goToHome(){
+      this.$router.push({ path: '/' });
+    },
+    async pageChange(page){
+      this.page = page;
+      await this.getOrders();
+    },
+    async getOrders(){
+      const page = `page=${this.page}`;
+      const per_page = `per_page=${this.per_page}`;
+      const res = await axios.get(`${window.location.origin}/api/v1/order?${page}&${per_page}`,{
+        header: {
+          Authentication: sessionStorage.getItem('token')
+        }
+      })
+      if(res.status === "success"){
+        const { total, data } = res.data;
+        this.totalCount = total;
+        this.orderList = data;
+        await this.getAirplaneType();
+        await this.getCarType();
+      }
+    },
+    async getAirplaneType(){
+      const res = await axios.get(`${window.location.origin}/api/v1/airport`,{
+      },{
+        header: {
+          Authentication: sessionStorage.getItem('token')
+        }
+      })
+      if(res.status === "success"){
+        this.airplaneType = res.data.find(item=>{
+          return item.id === Number(this.orderList.airport_id);
+        })
+      }
+    },
+    async getCarType(){
+      const res = await axios.get(`${window.location.origin}/api/v1/car-type`,{
+      },{
+        header: {
+          Authentication: sessionStorage.getItem('token')
+        }
+      })
+      if(res.status === "success"){
+        this.carType = res.data.find(item=>{
+          return item.id === Number(this.orderList.car_type_id);
+        })
+      }
+    }
+  },
+  async mounted() {
+    await this.getOrders();
+  }
 };
 </script>
 

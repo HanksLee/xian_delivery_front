@@ -5,7 +5,7 @@
       <div class="question-container">
         <div class="input-container">
           <div class="row">
-            <div class="col-24 location-text">上下車地點順序如下(若有多項地址，請拖曳地址進行排序)</div>
+            <div class="col-24 location-text">上下車地點順序如下</div>
             <div class="col-24">
               <el-form-item>
                 <el-input
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="submit-container">
-        <span class="back-btn">回首頁</span>
+        <!-- <span class="back-btn">回首頁</span> -->
         <span class="member-btn">送出</span>
       </div>
     </el-form>

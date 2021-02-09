@@ -2,6 +2,7 @@
   <div class="mt-60">
     <div class="container-sm">
       <div class="login-wrap">
+            <p class="reservation-placeholder">使用預約功能需登入會員</p>
         <div class="tabbar">
           <div
             class="tabbar-item tab1"
@@ -19,27 +20,27 @@
             <p>預約送機</p>
             <p>前往機場</p>
           </div>
-          <div
+          <!-- <div
             class="tabbar-item tab3"
             :class="currentTab == 'tab3' ? 'active' : ''"
             @click="switchCurrentTab('tab3')"
           >
             <p>短中長途</p>
             <p>接送服務</p>
-          </div>
-          <div
+          </div> -->
+          <!-- <div
             class="tabbar-item tab4"
             :class="currentTab == 'tab4' ? 'active' : ''"
             @click="switchCurrentTab('tab4')"
           >
             <p>預約全日</p>
             <p>觀光包車</p>
-          </div>
+          </div> -->
         </div>
-        <tab1 v-if="currentTab === 'tab1'"></tab1>
-        <tab2 v-if="currentTab === 'tab2'"></tab2>
-        <tab3 v-if="currentTab === 'tab3'"></tab3>
-        <tab4 v-if="currentTab === 'tab4'"></tab4>
+        <tab1 v-if="currentTab === 'tab1'" :airplane-type="airplaneType" :car-type="carType"></tab1>
+        <tab2 v-if="currentTab === 'tab2'" :airplane-type="airplaneType" :car-type="carType"></tab2>
+        <!-- <tab3 v-if="currentTab === 'tab3'"></tab3> -->
+        <!-- <tab4 v-if="currentTab === 'tab4'"></tab4> -->
       </div>
     </div>
   </div>
@@ -55,7 +56,15 @@ export default {
   name: "PickUp",
   data() {
     return {
-      currentTab: "tab1"
+      currentTab: "tab1",
+      airplaneType: [{
+        id: 0,
+        name: "請填寫機場"
+      }],
+      carType: [{
+        id: 0,
+        name: "請填寫座車"
+      }]
     };
   },
   components: {
@@ -67,15 +76,46 @@ export default {
   methods: {
     switchCurrentTab(currentTab) {
       this.currentTab = currentTab;
+    },
+    async getAirplaneType(){
+      const res = await axios.get(`${window.location.origin}/api/v1/airport`,{
+      },{
+        header: {
+          Authentication: sessionStorage.getItem('token')
+        }
+      })
+      if(res.status === "success"){
+        this.airplaneType = res.data
+      }
+    },
+    async getCarType(){
+      const res = await axios.get(`${window.location.origin}/api/v1/car-type`,{
+      },{
+        header: {
+          Authentication: sessionStorage.getItem('token')
+        }
+      })
+      if(res.status === "success"){
+        this.carType = res.data
+      }
     }
   },
-  mounted() {}
+  async mounted() {
+    await this.getAirplaneType();
+    await this.getCarType();
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 * {
   // outline: 1px solid red;
+}
+
+.reservation-placeholder {
+  text-align: center;
+  color: red;
+  line-height: 40px;
 }
 
 .container-sm {

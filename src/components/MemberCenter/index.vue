@@ -11,11 +11,11 @@
           ></el-option>
         </el-select>
         <history-module v-if="currentTab === 'historyModule'"></history-module>
-        <new-order-module v-if="currentTab === 'newOrderModule'"></new-order-module>
-        <address-edit-module v-if="currentTab === 'addressEditModule'"></address-edit-module>
+        <!-- <new-order-module v-if="currentTab === 'newOrderModule'"></new-order-module> -->
+        <!-- <address-edit-module v-if="currentTab === 'addressEditModule'"></address-edit-module> -->
         <info-module v-if="currentTab === 'infoModule'"></info-module>
         <invoice-module v-if="currentTab === 'invoiceModule'"></invoice-module>
-        <mobile-module v-if="currentTab === 'mobileModule'"></mobile-module>
+        <!-- <mobile-module v-if="currentTab === 'mobileModule'"></mobile-module> -->
         <reset-pwd-module v-if="currentTab === 'resetPwdModule'"></reset-pwd-module>
         <coupon-module v-if="currentTab === 'couponModule'"></coupon-module>
       </div>
@@ -37,20 +37,20 @@ export default {
   name: "member",
   data() {
     return {
-      currentTab: "newOrderModule",
+      currentTab: "historyModule",
       tabOptions: [
-        {
-          value: "newOrderModule",
-          label: "新預約"
-        },
+        // {
+        //   value: "newOrderModule",
+        //   label: "新預約"
+        // },
         {
           value: "historyModule",
           label: "歷史訂單"
         },
-        {
-          value: "addressEditModule",
-          label: "常用地址管理"
-        },
+        // {
+        //   value: "addressEditModule",
+        //   label: "常用地址管理"
+        // },
         {
           value: "infoModule",
           label: "編輯個人資料"
@@ -59,10 +59,10 @@ export default {
           value: "invoiceModule",
           label: "預設發票資訊"
         },
-        {
-          value: "mobileModule",
-          label: "行動電話變更驗證"
-        },
+        // {
+        //   value: "mobileModule",
+        //   label: "行動電話變更驗證"
+        // },
         {
           value: "resetPwdModule",
           label: "重設密碼"
@@ -71,10 +71,6 @@ export default {
           value: "couponModule",
           label: "我的折扣券"
         },
-        {
-          value: "logout",
-          label: "登出"
-        }
       ]
     };
   },

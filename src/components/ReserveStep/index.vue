@@ -35,7 +35,7 @@
             <div class="go-reserve">乘車GO!</div>
           </div>
           <div class="input-container">
-            <span class="search-btn">立即費用試算</span>
+            <router-link to="/PickUp"  class="search-btn" >立即費用試算</router-link>
           </div>
         </div>
       </div>
@@ -122,7 +122,7 @@ export default {
     }
 
     .triangle-down {
-      border-color: #2aa7ee transparent transparent transparent;
+      border-color:#d32a32 transparent transparent transparent;
       border-style: solid solid solid solid;
       border-width: 10px;
       height: 0px;
